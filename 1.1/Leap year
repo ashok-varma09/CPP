@@ -1,0 +1,25 @@
+#include <iostream>
+using namespace std;
+
+    void leap_year(int syear,int lyear)
+    {
+        cout<<"Leap years are : ";
+        for(int i=syear;i<=lyear;i++){
+        if (((i%400==0) || (i % 100!=0)) && (i%4==0))
+        {
+            cout<<i<<" ";
+        }
+        }
+    
+    }
+
+int main()
+{
+     int first_year,last_year;;
+     
+     cout<<"Enter first and last year : "<<endl;
+     cin>>first_year>>last_year;
+     
+     leap_year(first_year,last_year);
+    return 0;
+}
