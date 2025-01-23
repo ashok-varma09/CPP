@@ -1,0 +1,61 @@
+#include <iostream>
+using namespace std;
+
+//first we make class
+class car_record {
+	// declare the method private or public
+public :
+	//decalre datatypes with variable
+	int car_id;  // the id of car must be in digits and numerical valuees that's why we use int ;
+	string company_name;
+	string colour;
+	string model;
+	int car_release_year;
+
+	// here we amke a function or UDF to access the data easily
+	void set(int id,string name,string c,string m,int date)// here you have to take the variable according to upper datatypes
+	{
+		car_id=id;  // id will be taken by the user in the int main() ans will be stored in the car_id;
+		company_name=name;
+		colour=c;
+		model=m;
+		car_release_year=date;
+	}
+
+	// we make a UDF which will be print the all data in the end;
+
+	void print()
+	{
+		cout<<endl<<"Car ID : "<<car_id<<endl<<"Company name : "<<company_name<<endl<<"Colour : "<<colour<<endl<<"Model : "<<model<<endl<<"Release year : "<<car_release_year<<endl<<endl;
+	}
+
+};
+
+// we dont have to write and made the class in the int main();
+
+int main()
+{
+
+	//to declare the class we write = class_name object;
+
+	car_record car[5]; // we put 4 cars data that's we make an array of 4;
+
+	//we put the data statically
+
+	car[0].set(23,"BMW","Blue","M5",2000);  // here the first car data is added succesfully we put other data as it is;
+	car[1].set(45,"Suzuki","White","Wagonor",2006);
+	car[2].set(11,"Toyota","Green","Supra",1998);
+    car[3].set(56,"TATA","RED","Punch",2020); 
+    car[4].set(88,"Honda","black","City",2024); 
+
+ //so we putted the data perfectly 
+ // next step is print the data 
+ // for printing the data we already make a function so just call the data;
+ 
+      for (int i=0;i<5;i++)
+      {
+          car[i].print();
+      }
+
+	return 0;
+}
