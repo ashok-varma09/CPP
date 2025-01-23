@@ -1,0 +1,72 @@
+#include <iostream>
+using namespace std;
+
+    class employe{
+        public :
+        
+        int emp_id;
+        string emp_name;
+        int emp_age;
+        string emp_role;
+        int emp_salary;
+        string emp_city;
+        int emp_experience;
+        string emp_company_name;    
+     
+    void set(int id ,string name ,int age ,string role, int salary ,string city, int experience ,string company_name )
+     {
+         emp_id=id;
+         emp_name=name;
+         emp_age=age;
+         emp_role=role;
+         emp_salary=salary;
+         emp_city=city;
+         emp_experience=experience;
+         emp_company_name=company_name;
+     }
+     
+    void to_print()
+    {
+        cout<<"Employe details "<<endl<<"Id : "<<emp_id<<endl<<"Name : "<<emp_name<<endl<<"Age : "<<emp_age<<endl<<"Role : "<<emp_role<<endl<<"Salary : "<<emp_salary<<endl<<"City : "<<emp_city<<endl<<"Experience : "<<emp_experience<<endl<<"Company name : "<<emp_company_name;
+    }
+        
+    };
+int main()
+{
+      employe emp[5];
+      
+      int a,c,e,g;
+      string b,d,f,h;
+      
+      
+      for (int i=0;i<5;i++)
+      {
+          cout<<i+1<<" Employer details : "<<endl<<endl;
+          cout<<"Employe Id = ";
+          cin>>a;
+          cout<<"Employe Name = ";
+          cin>>b;
+          cout<<"Employe Age = ";
+          cin>>c;
+          cout<<"Employe Role = ";
+          cin>>d;
+          cout<<"Employe Salary = ";
+          cin>>e;
+          cout<<"Employe City = ";
+          cin>>f;
+          cout<<"Employe Experiance(in years) = ";
+          cin>>g;
+          
+          cout<<"Company name = ";
+          cin>>h;
+          cout<<endl<<endl;
+        emp[i].set(a,b,c,d,e,f,g,h);  
+      }
+      
+     for (int i=0;i<5;i++)
+     {
+         emp[i].to_print();
+     }
+
+    return 0;
+}
