@@ -2,62 +2,63 @@
 using namespace std;
 
 
-class TimeConverter{
-    public :
-    int hour;
-    int minute;
-    int second;
-    
-    void hours_to_second(int h,int m, int s)
-    {
-      s=(60*m);
-      s=(3600*h)+s;
-      cout<<"Total seconds are "<<s;
-    }
-    
-    void second_to_hours(int second)
-    {
-        int h,m,s;
-        h=second/3600;
-        m=(second-3600)/60;
-        s=(second-3600)%60;
-       
-        cout<<"HH:MM:SS ==>"<<h<<":"<<m<<":"<<s;
-        if (s==0)
-        {
-            cout<<"0";
-        }
-    }
+class TimeConverter {
+public :
+	int hour;
+	int minute;
+	int second;
+
+	void hours_to_second(int h,int m, int s)
+	{
+		s=(60*m);
+		s=(3600*h)+s;
+		cout<<"Total seconds are "<<s;
+	}
+
+	void second_to_hours(int second)
+	{
+		int h,m,s;
+		h=second/3600;
+		m=(second-3600)/60;
+		s=(second-3600)%60;
+
+		cout<<"HH:MM:SS ==>"<<h<<":"<<m<<":"<<s;
+		if (s==0)
+		{
+			cout<<"0";
+		}
+	}
 };
 int main()
 {
-   TimeConverter t;
-   int choice;
-   int h,m,s;
-   
-   cout<<"Press 1 for convert HH:MM:SS to second\nPress 2 for convert second to HH:MM:SS \n";
-   cin>>choice;
-   
-   switch(choice)
-   {
-       case 1:
-       cout<<"Enter hours : ";
-       cin>>h;
-       cout<<"Enter minutes : ";
-       cin>>m;
-       cout<<"Enter seconds : ";
-       cin>>s;
-       t.hours_to_second(h,m,s);
-       break;
-       
-       case 2:
-       cout<<"Enter seconds : ";
-       cin>>s;
-       t.second_to_hours(s);
-       break;
-       
-       default:
-       cout<<"Invalid choice !!...";
-   }
-    return 0;
+	TimeConverter t;
+	int choice;
+	int h,m,s;
+
+	cout<<"Press 1 for convert HH:MM:SS to second\nPress 2 for convert second to HH:MM:SS \n";
+	cin>>choice;
+
+	switch(choice)
+	{
+	case 1:
+		cout<<"Enter hours : ";
+		cin>>h;
+		cout<<"Enter minutes : ";
+		cin>>m;
+		cout<<"Enter seconds : ";
+		cin>>s;
+		t.hours_to_second(h,m,s);
+		break;
+
+	case 2:
+		cout<<"Enter seconds : ";
+		cin>>s;
+		t.second_to_hours(s);
+		break;
+
+	default:
+		cout<<"Invalid choice !!...";
+
+	}
+	return 0;
 }
