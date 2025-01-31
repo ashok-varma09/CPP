@@ -1,0 +1,140 @@
+#include <iostream>
+using namespace std;
+
+class Train {
+	int trainNumber;
+	string trainName;
+	string source;
+	string destination;
+	string trainTime;
+
+
+public :
+	static int count;
+
+	void inputtrandetail()
+	{
+
+		cout<<"Enter train number : "<<endl;
+		cin>>trainNumber;
+
+
+		cout<<"Enter train name : "<<endl;
+		cin>>trainName;
+
+		cout<<"Source : "<<endl;
+		cin>>source;
+
+		cout<<"Destination : " <<endl;
+
+		cin>>destination;
+
+		cout<<"Train time : "<<endl;
+
+		cin>>trainTime;
+
+		cout<<endl;
+		count++;
+
+	}
+
+
+	void displayTrainDetails(int i)
+	{
+		cout<<endl<<"Train "<<i<<" details "<<endl<<"--------------"<<endl<<"Train number :"<<trainNumber<<endl<<"Train name : "<<trainName<<endl<<"Source : "<<source<<endl<<"Destination : "<<destination<<endl<<"Train time : "<<trainTime<<endl<<endl;
+	
+	}
+
+	~Train()
+	{
+		count--;
+	}
+
+	int gettrainnum()
+	{
+		return trainNumber;
+	}
+};
+
+int Train::count=0;
+
+
+class RailwaySystem {
+
+	Train trains[50];
+	int totalTrains;
+
+public :
+
+	void add_train()
+	{
+		trains[Train :: count].inputtrandetail();
+	}
+
+	void displayAllTrains()
+	{
+		for (int i=0; i<Train::count; i++)
+		{
+			trains[i].displayTrainDetails(i+1);
+		}
+
+	}
+
+	void searchTrainByNumber(int number)
+	{
+		for (int i=0; i<Train::count; i++)
+		{
+
+			if (trains[i].gettrainnum()==number)
+			{
+				trains[i].displayTrainDetails(i+1);
+			}
+		
+		}
+	}
+};
+
+int main()
+{
+
+
+	RailwaySystem c;
+	int choice ;
+	do {
+		cout<<"Press 1 for Add New Train Record"<<endl<<"Press 2 for Display All Train Records"<<endl<<"Press 3 for Search Train by Number"<<endl<<"Press 0 for exit"<<endl;
+		cin>>choice;
+
+		switch(choice)
+		{
+		case 1 :
+			for (int i=0; i<3; i++)
+			{
+				c.add_train();
+			}
+			break;
+		case 2:
+
+			c.displayAllTrains();
+			break;
+
+		case 3 :
+
+			int num;
+			cout<<"Enter train NO: to search : ";
+			cin>>num;
+
+			c.searchTrainByNumber(num);
+			break;
+
+		default:
+			cout<<"Invalid choice"<<endl;
+
+		case 0:
+			cout<<"You are exiting from windows";
+		}
+	} while(choice!= 0);
+
+
+
+	return 0;
+}
