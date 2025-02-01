@@ -20,18 +20,25 @@ public :
 
 
 		cout<<"Enter train name : "<<endl;
-		cin>>trainName;
+		cin>>ws;
+		getline(cin,trainName);
 
 		cout<<"Source : "<<endl;
-		cin>>source;
+		cin>>ws;
+		getline(cin,source);
+
 
 		cout<<"Destination : " <<endl;
 
-		cin>>destination;
+		cin>>ws;
+		getline(cin,destination);
+
 
 		cout<<"Train time : "<<endl;
 
-		cin>>trainTime;
+		cin>>ws;
+		getline(cin,trainTime);
+
 
 		cout<<endl;
 		count++;
@@ -42,7 +49,7 @@ public :
 	void displayTrainDetails(int i)
 	{
 		cout<<endl<<"Train "<<i<<" details "<<endl<<"--------------"<<endl<<"Train number :"<<trainNumber<<endl<<"Train name : "<<trainName<<endl<<"Source : "<<source<<endl<<"Destination : "<<destination<<endl<<"Train time : "<<trainTime<<endl<<endl;
-	
+
 	}
 
 	~Train()
@@ -89,7 +96,7 @@ public :
 			{
 				trains[i].displayTrainDetails(i+1);
 			}
-		
+
 		}
 	}
 };
