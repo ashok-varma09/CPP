@@ -1,0 +1,46 @@
+
+#include <iostream>
+using namespace std;
+
+class p
+{
+    public :
+	double f,k,c;
+};
+
+class q:  public p
+{
+    public :
+
+	double toFehrenheit(double c)
+	{
+	   f=c*(9/5) + 32;
+	   return f;
+	}
+	
+
+};
+class r : public q
+{
+    
+    public :
+    double tokelvin()
+    {
+        k=(f - 32) * 5/9 + 273.15;
+        return k;
+    }
+    
+    
+};
+int main()
+{
+    r a;
+    int c;
+    cout<<"Enter celcius : ";
+    cin>>c;
+    cout<<"Fehranheit is : "<<a.toFehrenheit(c)<<endl;
+    cout<<"kelvin is : "<<a.tokelvin();
+
+
+	return 0;
+}
