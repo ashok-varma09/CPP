@@ -1,0 +1,159 @@
+#include <iostream>
+using namespace std;
+class vehicle
+{
+    int vehicleID;
+    string manufacturer;
+    string model;
+    int year;
+
+public:
+
+    vehicle(){
+
+    }
+    vehicle(int i)
+    {
+        cout << endl;
+
+                cout << "Enter vehicle ID : ";
+                cin >> vehicleID;
+        
+                cout << "Enter manufacturer name : ";
+                cin >> manufacturer;
+        
+                cout << "Enter model NO : ";
+                cin >> model;
+        
+                cout << "Enter manufactured year : ";
+                cin >> year;
+    }
+
+    
+    
+
+    ~vehicle()
+    {
+        cout << "D";
+    }
+
+    int get_id()
+    {
+        return vehicleID;
+    }
+
+    void print()
+    {
+        cout << endl
+             << "vehicle ID : " << vehicleID << endl
+             << "Manufacturer : " << manufacturer << endl
+             << "Model : " << model << endl
+             << "Year : " << year << endl
+             << endl;
+    }
+};
+
+class car : public vehicle
+{
+    public:
+    string fuel;
+    car():vehicle(1){
+        cout<<"Enter fuel type ";
+        cin>>fuel;
+    }
+    void printCarData(){
+        print();
+        cout<<"Enter fuel type  "<<fuel;
+    }
+};
+class VehicleRegistry
+{
+    
+    vehicle vehicles[50];
+    int totalVehicle=0;
+
+public:
+   
+    void add(vehicle v)
+    {
+        vehicles[totalVehicle] = v;
+        totalVehicle++;
+    }
+
+    void display()
+    {
+        for (int i = 0; i < totalVehicle; i++)
+        {
+            vehicles[i].print();
+        }
+    }
+
+    void search(int num)
+    {
+        int temp = 0;
+
+        for (int i = 0; i < totalVehicle; i++)
+        {
+            if (vehicles[i].get_id() == num)
+            {
+                vehicles[i].print();
+                temp = 1;
+                break;
+               
+            }
+        }
+        if (temp == 0)
+        {
+            cout << "Invalid ID!!..." << endl;
+        }
+    }
+};
+
+int main()
+{
+    
+    VehicleRegistry registery;
+    vehicle a;
+    int choice,num;
+
+    do
+    {
+
+        cout << "Press 1 to add car \nPress 2 for display all car \nPress 3 to search car by ID\nPress 0 to exit\n\n";
+        cin >> choice;
+
+        switch (choice)
+        {
+            case 1 : 
+            cout<<"How many cars do you want to add ?";
+            cin>>num;
+            for (int i=0;i<num;i++)
+            {
+                vehicle v(1);
+                cout << endl;
+                registery.add(v);
+            }
+            break;
+
+            case 2 :
+            registery.display();
+            break;
+
+            case 3 : 
+            cout<<"Enter car ID : ";
+            cin>>num;
+            registery.search(num);
+
+            break;
+
+            default:
+            cout<<"Invalid choice..Try again"<<endl;
+
+            case 0:
+            cout<<"You are exiting from windows ....Thank you .."<<endl;
+        }
+
+    } while (choice != 0);
+
+    return 0;
+}
