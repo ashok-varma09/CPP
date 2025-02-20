@@ -8,33 +8,30 @@ class vehicle
     int year;
 
 public:
-
-    vehicle(){
-
+    vehicle()
+    {
+        
     }
     vehicle(int i)
     {
         cout << endl;
 
-                cout << "Enter vehicle ID : ";
-                cin >> vehicleID;
-        
-                cout << "Enter manufacturer name : ";
-                cin >> manufacturer;
-        
-                cout << "Enter model NO : ";
-                cin >> model;
-        
-                cout << "Enter manufactured year : ";
-                cin >> year;
-    }
+        cout << "Enter vehicle ID : ";
+        cin >> vehicleID;
 
-    
-    
+        cout << "Enter manufacturer name : ";
+        cin >> manufacturer;
+
+        cout << "Enter model NO : ";
+        cin >> model;
+
+        cout << "Enter manufactured year : ";
+        cin >> year;
+    }
 
     ~vehicle()
     {
-        cout << "D";
+        cout << "Destructer!!!...";
     }
 
     int get_id()
@@ -48,32 +45,120 @@ public:
              << "vehicle ID : " << vehicleID << endl
              << "Manufacturer : " << manufacturer << endl
              << "Model : " << model << endl
-             << "Year : " << year << endl
-             << endl;
+             << "Year : " << year << endl;
     }
 };
 
 class car : public vehicle
 {
-    public:
+public:
     string fuel;
-    car():vehicle(1){
-        cout<<"Enter fuel type ";
-        cin>>fuel;
+    car(){
+
     }
-    void printCarData(){
+    car(int i) : vehicle(1)
+    {
+        cout << "Enter fuel type ";
+        cin >> fuel;
+    }
+
+    void printCarData()
+    {
         print();
-        cout<<"Enter fuel type  "<<fuel;
+        cout << "Fuel type is : " << fuel;
     }
 };
+
+class electric : public car
+{
+public:
+    int battery;
+    electric()
+    {
+
+    }
+    electric(int i) : car(1)
+    {
+        cout << "Enter battery capacity : ";
+        cin >> battery;
+    }
+
+    void print_battery()
+    {
+        print();
+        cout << "Battery capacity is : " << battery;
+    }
+};
+
+class Aircraft 
+{
+    public :
+    int flightrange ;
+    Aircraft ()
+    {
+        
+    }
+    Aircraft(int i)
+    {
+        cout<<"Flightrange : ";
+        cin>>flightrange;
+    }
+};
+
+class flyingcar : public car
+{
+
+};
+
+class topspeed : public electric
+{
+    public :
+    int speed;
+    topspeed()
+    {
+
+    }
+    topspeed(int i)
+    {
+        cout<<"Topspeed : ";
+        cin>>speed;
+    }
+};
+
 class VehicleRegistry
 {
-    
+
     vehicle vehicles[50];
-    int totalVehicle=0;
+    int totalVehicle = 0;
+
+    car cars[50];
+    int carindex = 0;
+
+    electric electrics[50];
+    int electricindex=0;
+
+    Aircraft Aircrafts[50];
+    int Aircraftindex=0;
 
 public:
-   
+
+
+    void add_Aircrafts(Aircraft f)
+    {
+        Aircrafts[Aircraftindex]=f;
+        Aircraftindex++;
+    }
+    void add_electrics(electric b)
+    {
+        electrics[electricindex]=b;
+        electricindex++;
+    }
+    void add_car(car t)
+    {
+        cars[carindex]=t;
+        carindex++;
+    }
+
     void add(vehicle v)
     {
         vehicles[totalVehicle] = v;
@@ -99,7 +184,6 @@ public:
                 vehicles[i].print();
                 temp = 1;
                 break;
-               
             }
         }
         if (temp == 0)
@@ -111,46 +195,46 @@ public:
 
 int main()
 {
-    
+
     VehicleRegistry registery;
-    vehicle a;
-    int choice,num;
+   
+    string type;
+    int choice, num;
 
     do
     {
 
-        cout << "Press 1 to add car \nPress 2 for display all car \nPress 3 to search car by ID\nPress 0 to exit\n\n";
+        cout << "Press 1 to add car \nPress 2 for display all car \nPress 3 to search car by ID\nPress 4 for search by its type\nPress 0 to exit\n\n";
         cin >> choice;
 
         switch (choice)
         {
-            case 1 : 
-            cout<<"How many cars do you want to add ?";
-            cin>>num;
-            for (int i=0;i<num;i++)
+        case 1:
+            cout << "How many cars do you want to add ?";
+            cin >> num;
+            for (int i = 0; i < num; i++)
             {
-                vehicle v(1);
-                cout << endl;
+                electric v(1);
                 registery.add(v);
             }
             break;
 
-            case 2 :
+        case 2:
             registery.display();
             break;
 
-            case 3 : 
-            cout<<"Enter car ID : ";
-            cin>>num;
+        case 3:
+            cout << "Enter car ID : ";
+            cin >> num;
             registery.search(num);
 
             break;
 
-            default:
-            cout<<"Invalid choice..Try again"<<endl;
+        default:
+            cout << "Invalid choice..Try again" << endl;
 
-            case 0:
-            cout<<"You are exiting from windows ....Thank you .."<<endl;
+        case 0:
+            cout << "You are exiting from windows ....Thank you .." << endl;
         }
 
     } while (choice != 0);
