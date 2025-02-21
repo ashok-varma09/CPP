@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 using namespace std;
 class vehicle
 {
@@ -10,7 +11,6 @@ class vehicle
 public:
     vehicle()
     {
-        
     }
     vehicle(int i)
     {
@@ -20,18 +20,20 @@ public:
         cin >> vehicleID;
 
         cout << "Enter manufacturer name : ";
-        cin >> manufacturer;
+        cin >> ws; 
+        getline(cin, manufacturer);
+       
 
         cout << "Enter model NO : ";
-        cin >> model;
-
+        cin >> ws; 
+        getline(cin, model);
         cout << "Enter manufactured year : ";
         cin >> year;
     }
 
     ~vehicle()
     {
-        cout << "Destructer!!!...";
+        
     }
 
     int get_id()
@@ -53,20 +55,16 @@ class car : public vehicle
 {
 public:
     string fuel;
-    car(){
-
+    car()
+    {
     }
     car(int i) : vehicle(1)
     {
         cout << "Enter fuel type ";
-        cin >> fuel;
+        cin >> ws; 
+        cin>>fuel;
     }
 
-    void printCarData()
-    {
-        print();
-        cout << "Fuel type is : " << fuel;
-    }
 };
 
 class electric : public car
@@ -75,7 +73,6 @@ public:
     int battery;
     electric()
     {
-
     }
     electric(int i) : car(1)
     {
@@ -83,45 +80,96 @@ public:
         cin >> battery;
     }
 
-    void print_battery()
+    void print_electric()
     {
+        cout << "Fuel type is : " << fuel << endl;
+        cout << "Battery capacity is : " << battery ;
         print();
-        cout << "Battery capacity is : " << battery;
     }
 };
 
-class Aircraft 
+class Aircraft
 {
-    public :
-    int flightrange ;
-    Aircraft ()
+public:
+    int flightrange;
+    Aircraft()
     {
-        
     }
     Aircraft(int i)
     {
-        cout<<"Flightrange : ";
-        cin>>flightrange;
+        cout << "Flightrange : ";
+        cin >> flightrange;
+    }
+
+    
+};
+
+class flyingcar : public Aircraft, public car
+{
+public:
+    flyingcar() {}
+
+    flyingcar(int i) : Aircraft(1), car(1) {}
+
+    void print_flyingcar()
+    {
+        print();
+        cout<<"flight range is : "<<flightrange<<endl;
+        cout<<"Fuel type is : "<<fuel<<endl;
     }
 };
 
-class flyingcar : public car
+class sportscar : public electric
 {
-
-};
-
-class topspeed : public electric
-{
-    public :
+public:
     int speed;
-    topspeed()
-    {
+    sportscar() {}
 
-    }
-    topspeed(int i)
+    sportscar(int i) : electric(1)
     {
-        cout<<"Topspeed : ";
-        cin>>speed;
+        cout << "Topspeed : ";
+        cin >> speed;
+    }
+
+    void print_sportscar()
+    {
+        print();
+        cout<<"Top spedd is : "<<speed<<endl;
+        cout<<"Battery capacity is : "<<battery;
+    }
+};
+
+class sedan : public car
+{
+public:
+    sedan(int i) : car(1)
+    {
+    }
+    sedan()
+    {
+    }
+
+    void print_sedan()
+    {
+        cout<<"Fuel type is : "<<fuel<<endl;
+        print();
+    }
+};
+
+class SUV : public car
+{
+public:
+    SUV()
+    {
+    }
+    SUV(int i) : car(1)
+    {
+    }
+    
+    void print_suv()
+    {
+        cout<<"Fuel type is : "<<fuel<<endl;
+        print();
     }
 };
 
@@ -131,48 +179,124 @@ class VehicleRegistry
     vehicle vehicles[50];
     int totalVehicle = 0;
 
-    car cars[50];
-    int carindex = 0;
+    sedan sedans[50];
+    int sedanindex = 0;
 
     electric electrics[50];
-    int electricindex=0;
+    int electricindex = 0;
 
-    Aircraft Aircrafts[50];
-    int Aircraftindex=0;
+    flyingcar flyingcars[50];
+    int flyingcarindex = 0;
+
+    SUV suvs[50];
+    int suvindex = 0;
+
+    sportscar sportscars[50];
+    int sportscarindex = 0;
 
 public:
-
-
-    void add_Aircrafts(Aircraft f)
+    void add(SUV c)
     {
-        Aircrafts[Aircraftindex]=f;
-        Aircraftindex++;
-    }
-    void add_electrics(electric b)
-    {
-        electrics[electricindex]=b;
-        electricindex++;
-    }
-    void add_car(car t)
-    {
-        cars[carindex]=t;
-        carindex++;
-    }
-
-    void add(vehicle v)
-    {
-        vehicles[totalVehicle] = v;
+        suvs[suvindex] = c;
+        suvindex++;
         totalVehicle++;
     }
 
-    void display()
+    void add(electric v)
     {
-        for (int i = 0; i < totalVehicle; i++)
+        electrics[electricindex] = v;
+        electricindex++;
+        totalVehicle++;
+    }
+
+    void add(sedan cars)
+    {
+        sedans[sedanindex] = cars;
+        sedanindex++;
+        totalVehicle++;
+    }
+
+    void add(flyingcar s)
+    {
+        flyingcars[flyingcarindex] = s;
+        flyingcarindex++;
+        totalVehicle++;
+    }
+
+    void add(sportscar a)
+    {
+        sportscars[sportscarindex] = a;
+        sportscarindex++;
+        totalVehicle++;
+    }
+
+    void display_electric()
+    {
+        if (electricindex<=0)
         {
-            vehicles[i].print();
+            cout<<"Car is not available : "<<endl<<endl;
+        }
+
+        for (int i = 0; i < electricindex; i++)
+        {
+            electrics[i].print_electric();
+        }
+    }
+    
+    void display_SUV()
+    {
+        if (suvindex<=0)
+        {
+            cout<<"Car is not available : "<<endl<<endl;
+        }
+        cout<<"Total "<<suvindex+1<<" cars are SUV's"<<endl;
+        for (int i = 0; i < suvindex; i++)
+        {
+            suvs[i].print_suv();
+        }
+    }
+    
+    void display_sedan()
+    {
+        if (sedanindex<=0)
+        {
+            cout<<"Car is not available : "<<endl<<endl;
+        }
+        for (int i = 0; i < sedanindex; i++)
+        {
+            sedans[i].print_sedan();
         }
     }
 
+     
+    void display_flyingcar()
+    {
+
+        if (flyingcarindex<=0)
+        {
+            cout<<"Car is not available : "<<endl<<endl;
+        }
+
+        for (int i = 0; i < flyingcarindex; i++)
+        {
+            flyingcars[i].print_flyingcar();
+        }
+    }
+
+     
+    void display_sportscar()
+    {
+        if (sportscarindex<=0)
+        {
+            cout<<"Car is not available : "<<endl<<endl;
+        }
+
+        for (int i = 0; i < sportscarindex; i++)
+        {
+            sportscars[i].print_sportscar();
+        }
+    }
+    
     void search(int num)
     {
         int temp = 0;
@@ -197,44 +321,115 @@ int main()
 {
 
     VehicleRegistry registery;
-   
+
     string type;
-    int choice, num;
+    int choice, num, choice2;
 
     do
     {
 
-        cout << "Press 1 to add car \nPress 2 for display all car \nPress 3 to search car by ID\nPress 4 for search by its type\nPress 0 to exit\n\n";
+        cout << "Press 1 to add car \nPress 2 for display all car \nPress 3 to search car by its type \nPress 4 for search by its ID\nPress 0 to exit\n\n";
         cin >> choice;
 
         switch (choice)
         {
         case 1:
-            cout << "How many cars do you want to add ?";
-            cin >> num;
-            for (int i = 0; i < num; i++)
+            cout << "1.Electric\t2. SUV\t3.sedan\t4.flying car\t5.sports car\n";
+            cin >> choice2;
+
+            switch (choice2)
             {
-                electric v(1);
-                registery.add(v);
+            case 1:
+            {
+                electric a(1);
+                registery.add(a);
+            }
+            break;
+
+            case 2:
+            {
+                SUV c(1);
+                registery.add(c);
+            }
+            break;
+
+            case 3:
+            {
+                sedan ca(1);
+                registery.add(ca);
+            }
+            break;
+
+            case 4:
+            {
+                flyingcar a(1);
+                registery.add(a);
+            }
+            break;
+
+            case 5:
+            {
+                sportscar a(1);
+                registery.add(a);
+            }
+            break;
+
+            default:
+                cout << "Inavlid choice " << endl;
+                break;
             }
             break;
 
         case 2:
-            registery.display();
-            break;
+        {
+          
+        }
+        break;
 
         case 3:
-            cout << "Enter car ID : ";
-            cin >> num;
-            registery.search(num);
+        {
+            cout<<"Which types of car data data do you want to display ?";
+            cin>>type;
 
-            break;
+            if (type=="suv" || type =="SUV")
+            {
+                registery.display_SUV();
+            }
+            else if (type=="electric" || type =="ELECTRIC")
+            {
+                registery.display_electric();
+            }
+            else if (type=="flyingcar" || type =="FLYINGCAR")
+            {
+                registery.display_flyingcar();
+            }
+            else if (type == "sedan" || type == "SEDAN")
+            {
+                registery.display_sedan();
+            }
+            else if (type =="sportscar"|| type == "SPORTSCAR")
+            {
+                cout<<"called";
+                registery.display_sportscar();
+            }
+            else 
+            {
+                cout<<"Inavlid choice"<<endl;
+                break;
+            }
+        }
+        break;
+
 
         default:
+        {
             cout << "Invalid choice..Try again" << endl;
+        }
+        break;
 
         case 0:
             cout << "You are exiting from windows ....Thank you .." << endl;
+            break;
         }
 
     } while (choice != 0);
