@@ -1,0 +1,296 @@
+#include <iostream>
+using namespace std;
+
+class Vehicle 
+{
+public:
+    int vehicleID;
+    char manufacturer[50];
+    char model[50];
+    int year;
+
+public:
+    Vehicle() : vehicleID(0), year(0)
+    {
+        (manufacturer, "");
+        (model, "");
+    }
+
+    virtual void getDetails() 
+    {
+        cout << "ENTER VEHICLE ID: ";
+        cin >> vehicleID;
+        cout << "ENTER MANUFACTURER: ";
+        cin >> manufacturer;
+        cout << "ENTER MODEL: ";
+        cin >> model;
+        cout << "ENTER YEAR: ";
+        cin >> year;
+    }
+
+    virtual void displayDetails() 
+    {
+        cout << "VEHICLE ID: " << vehicleID << endl;
+        cout << "MANUFACTURER: " << manufacturer << endl;
+        cout << "MODEL: " << model << endl;
+        cout << "YEAR: " << year << endl;
+    }
+
+    int getVehicleID() 
+    {
+        return vehicleID;
+    }
+};
+
+class Car : public Vehicle
+{
+public:
+    char fuelType[20];
+
+    void getDetails()
+    {
+        Vehicle::getDetails();
+        cout << "ENTER FUEL TYPE (petrol / disel): ";
+        cin >> fuelType;
+    }
+
+    void displayDetails()
+    {
+        Vehicle::displayDetails();
+        cout << "FUEL TYPE: " << fuelType << endl;
+    }
+};
+
+class ElectricCar : public Car
+{
+public:
+    int batteryCapacity;
+
+    void getDetails() 
+    {
+        Car::getDetails();
+        cout << "ENTER BATTERY CAPACITY: ";
+        cin >> batteryCapacity;
+    }
+
+    void displayDetails() 
+    {
+        Car::displayDetails();
+        cout << "BATTERY CAPACITY: " << batteryCapacity << endl;
+    }
+};
+
+class FlyingCar : public Car
+{
+public:
+    int flightRange;
+
+    void getDetails() override
+    {
+        Car::getDetails();
+        cout << "ENTER FLIGHT RANGE (km): ";
+        cin >> flightRange;
+    }
+
+    void displayDetails() 
+    {
+        Car::displayDetails();
+        cout << "FLIGHT RANGE: " << flightRange << " km" << endl;
+    }
+};
+
+class SportsCar : public ElectricCar 
+{
+public:
+    int topSpeed;
+
+    void getDetails() override
+    {
+        ElectricCar::getDetails();
+        cout << "ENTER TOP SPEED (km/h): ";
+        cin >> topSpeed;
+    }
+
+    void displayDetails() 
+    {
+        ElectricCar::displayDetails();
+        cout << "TOP SPEED: " << topSpeed << " km/h" << endl;
+    }
+};
+
+class Sedan : public Car
+{
+public:
+    void getDetails() 
+    {
+        Car::getDetails();
+    }
+
+    void displayDetails()
+    {
+        Car::displayDetails();
+    }
+};
+
+class SUV : public Car 
+{
+public:
+    void getDetails()
+    {
+        Car::getDetails();
+    }
+
+    void displayDetails() 
+    {
+        Car::displayDetails();
+    }
+};
+
+class VehicleRegistry
+{
+public:
+    Vehicle* registry[100];
+    int count;
+
+public:
+    VehicleRegistry() : count(0) {}
+
+    void addVehicle(Vehicle* vehicle)
+    {
+        if (count < 100) 
+        {
+            registry[count++] = vehicle;
+        } else {
+            cout << "REGISTRATION SYSTEM IS FULL." << endl;
+        }
+    }
+
+    void displayAllVehicles() 
+    {
+        if (count == 0)
+        {
+            cout << "NO VEHICLE REGISTERED.\n";
+        }
+        else 
+        {
+            for (int i = 0; i < count; i++) {
+                registry[i]->displayDetails();
+                cout << "---------------------\n";
+            }
+        }
+    }
+
+    Vehicle* searchById(int id)
+    {
+        for (int i = 0; i < count; i++) 
+        {
+            if (registry[i]->getVehicleID() == id)
+            {
+                return registry[i];
+            }
+        }
+        return nullptr;
+    }
+
+    ~VehicleRegistry() {
+        for (int i = 0; i < count; i++) 
+        {
+            delete registry[i];
+        }
+    }
+};
+
+void inputVehicle(VehicleRegistry& registry)
+{
+    int select;
+    cout << "SELECT VEHICLE TYPE:\n";
+    cout << "1. CAR\n";
+    cout << "2. ELECTRIC CAR\n";
+    cout << "3. FLYING CAR\n";
+    cout << "4. SPORTS CAR\n";
+    cout << "5. SEDAN\n";
+    cout << "6. SUV\n";
+    cout << "SELECT OPTION: ";
+    cin >> select;
+    cout << endl;
+
+    Vehicle* vehicle = nullptr;
+
+    switch (select)
+    {
+        case 1:
+            vehicle = new Car();
+            break;
+        case 2:
+            vehicle = new ElectricCar();
+            break;
+        case 3:
+            vehicle = new FlyingCar();
+            break;
+        case 4:
+            vehicle = new SportsCar();
+            break;
+        case 5:
+            vehicle = new Sedan();
+            break;
+        case 6:
+            vehicle = new SUV();
+            break;
+        default:
+            cout << "INVALID VEHICLE TYPE.\n";
+            return;
+    }
+
+    vehicle->getDetails();
+    registry.addVehicle(vehicle);
+}
+
+int main() 
+{
+    VehicleRegistry registry;
+
+    int choice;
+    while (true) {
+        cout << "\n----- VEHICLE REGISTRATION SYSTEM -----\n";
+        cout << "1. ADD A NEW VEHICLE\n";
+        cout << "2. VIEW ALL VEHICLES\n";
+        cout << "3. SEARCH VEHICLE BY ID\n";
+        cout << "4. EXIT\n";
+        cout << "SELECT OPTION: ";
+        cin >> choice;
+        
+        cout << endl;
+
+        switch (choice)
+        {
+            case 1:
+                inputVehicle(registry);
+                break;
+            case 2:
+                registry.displayAllVehicles();
+                break;
+            case 3: {
+                int id;
+                cout << "ENTER VEHICLE ID TO SEARCH: ";
+                cin >> id;
+                
+                Vehicle* vehicle = registry.searchById(id);
+                
+                if (vehicle != nullptr)
+                {
+                    vehicle->displayDetails();
+                } else {
+                    cout << "VEHICLE NOT FOUND.\n";
+                }
+                break;
+            }
+            case 4:
+                cout << "EXITING--THANK YOU.\n";
+                return 0;
+            default:
+                cout << "INVALID OPTION. SELECT AGAIN.\n";
+        }
+    }
+
+    return 0;
+}
